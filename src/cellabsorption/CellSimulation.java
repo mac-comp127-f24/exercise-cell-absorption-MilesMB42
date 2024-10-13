@@ -34,7 +34,7 @@ public class CellSimulation {
             
             for (Cell cell : cells) {
                 cell.moveAround(canvasCenter);
-                cell.grow(0.02);
+                handleCellInteraction();
             }
             canvas.draw();
             canvas.pause(10);
@@ -52,13 +52,17 @@ public class CellSimulation {
             Color.getHSBColor(rand.nextFloat(), rand.nextFloat() * 0.5f + 0.1f, 1));
             cells.add(newCell);
             canvas.add(newCell.getShape());
-        }
-
-        
+        }       
     }
 
-    private static double sqr(double x) {
-        return x * x;
+    private void handleCellInteraction() {
+        for (int i = 0; i < cells.size(); i++){
+            Cell firstCell = cells.get(i);
+            for (int j = i + 1; j < cells.size(); j++){
+                Cell otherCell = cells.get(j);
+                firstCell.interactWith(otherCell);
+            }
+        }
     }
 
 }
